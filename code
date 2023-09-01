@@ -41,3 +41,26 @@ function doPost (e) {
 }
 Html to google Sheet.txt
 Displaying Html to google Sheet.txt.
+
+
+ const scriptURL = 'https://script.google.com/macros/s/AKfycbxMybDgmGgZPwwFmQlbnbCjR1RlLXNrEGFVjDU7K4dXdXzPi96O9lBn3ePYKR1QtJoQrw/exec'
+        const form = document.forms['appointment-booking']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const submitButton=document.getElementById('appointment-submit-button');
+            fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('success-message').textContent ="Thank you! We'll be in touch shortly.";
+                        form.reset();
+                        submitButton.disabled = true;
+                    } else {
+                        document.getElementById('success-message').textContent = "Oops! Something went wrong. Please try again later.";
+                    }
+                })
+                .catch(error => console.error('Error!', error.message))
+   })
